@@ -1,50 +1,106 @@
 module.exports = grammar({
-  name: "ftl",
+  name: "fluent",
 
-  extras: ($) => [/[ \t]/],
+  extras: ($) => [/\s/, $.comment],
+
+  externals: ($) => [$._terminator, $._leading_dot],
 
   rules: {
-    source_file: ($) => repeat($._entry),
-
-    _entry: ($) => choice($.message, $.comment, $.blank_line),
-
-    comment: ($) => token(seq("#", /.*/)),
-
-    blank_line: ($) => /\r?\n/,
+    translation_file: ($) => repeat(choice($.message, $.term)),
 
     message: ($) =>
       seq(
-        field("id", $.identifier),
+        alias($.identifier, $.message_identifier),
         "=",
-        field("value", $.message_value),
-        optional("\n"),
+        $.value,
+        repeat($.attribute),
+        $._terminator,
       ),
 
-    identifier: ($) => /[a-zA-Z][a-zA-Z0-9_-]*/,
+    term: ($) =>
+      seq($.term_identifier, "=", $.value, repeat($.attribute), $._terminator),
 
-    message_value: ($) => repeat1(choice($.text, $.placeable, $.line_break)),
+    value: ($) => repeat1(choice($._text, $.placeable, $.variant)),
 
-    text: ($) => token(prec(1, /[^\n{]+/)),
+    placeable: ($) => seq("{", $._expression, "}"),
 
-    placeable: ($) => seq("{", field("expression", $.expression), "}"),
+    variant: ($) =>
+      seq("{", repeat1(choice($.selector, $.default_selector)), "}"),
 
-    expression: ($) =>
-      choice($.variable_reference, $.number_literal, $.string_literal),
+    _expression: ($) =>
+      choice(
+        $.number,
+        $.term_identifier,
+        alias($.identifier, $.message_identifier),
+        $.call_expression,
+        $.variable_expression,
+        $.select_expression,
+        $.attribute_expression,
+        $.variant_expression,
+      ),
 
-    variable_reference: ($) => seq("$", $.identifier),
+    attribute: ($) =>
+      seq(alias($._leading_dot, "."), $.identifier, "=", $.value),
 
-    number_literal: ($) => /\d+(\.\d+)?/,
+    variable_expression: ($) =>
+      seq("$", alias($.identifier, $.variable_identifier)),
 
-    string_literal: ($) =>
+    call_expression: ($) =>
       seq(
-        '"',
-        repeat(choice(token.immediate(/[^"\\]+/), $.escape_sequence)),
-        '"',
+        alias($.identifier, $.function_identifier),
+        "(",
+        sep(",", choice($._expression, $.keyword_argument)),
+        ")",
       ),
 
-    escape_sequence: ($) =>
-      token.immediate(seq("\\", choice(/["\\\/bfnrt]/, /u[0-9a-fA-F]{4}/))),
+    keyword_argument: ($) =>
+      seq(alias($.identifier, $.keyword_identifier), ":", $._expression),
 
-    line_break: ($) => /\n/,
+    select_expression: ($) =>
+      seq($._expression, "->", repeat1(choice($.selector, $.default_selector))),
+
+    variant_expression: ($) =>
+      seq(
+        choice(alias($.identifier, $.message_identifier), $.term_identifier),
+        "[",
+        choice(alias($.identifier, $.facet_identifier), $.number),
+        "]",
+      ),
+
+    attribute_expression: ($) =>
+      seq(
+        choice(alias($.identifier, $.message_identifier), $.term_identifier),
+        ".",
+        $.identifier,
+      ),
+
+    selector: ($) =>
+      seq(
+        "[",
+        choice(alias($.identifier, $.facet_identifier), $.number),
+        "]",
+        $.value,
+      ),
+
+    default_selector: ($) =>
+      seq("*", "[", alias($.identifier, $.facet_identifier), "]", $.value),
+
+    number: ($) => /\d+(\.\d*)?/,
+
+    identifier: ($) => /[a-zA-Z][\w-]*/,
+
+    term_identifier: ($) => /-[a-zA-Z][\w-]*/,
+
+    _text: ($) => /[^{\[*\n]+/,
+
+    comment: ($) => /#.*/,
   },
 });
+
+function sep(separator, rule) {
+  return optional(sep1(separator, rule));
+}
+
+function sep1(separator, rule) {
+  return seq(rule, repeat(seq(separator, rule)));
+}
