@@ -1,4 +1,3 @@
-// grammar.js
 module.exports = grammar({
   name: "ftl",
 
@@ -47,5 +46,11 @@ module.exports = grammar({
       token.immediate(seq("\\", choice(/["\\\/bfnrt]/, /u[0-9a-fA-F]{4}/))),
 
     line_break: ($) => /\n/,
+
+    // Добавляем узлы для скобок
+    brace_left: () => "{",
+    brace_right: () => "}",
+    bracket_left: () => "[",
+    bracket_right: () => "]",
   },
 });
