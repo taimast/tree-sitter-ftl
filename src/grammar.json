@@ -60,7 +60,7 @@
     },
     "text": {
       "type": "PATTERN",
-      "value": "[^{}]+"
+      "value": "[^{}\\n]+"
     },
     "variable": {
       "type": "SEQ",
