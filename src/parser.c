@@ -2415,11 +2415,11 @@ static const bool ts_external_scanner_states[2][EXTERNAL_TOKEN_COUNT] = {
 #ifdef __cplusplus
 extern "C" {
 #endif
-void *tree_sitter_fluent_external_scanner_create(void);
-void tree_sitter_fluent_external_scanner_destroy(void *);
-bool tree_sitter_fluent_external_scanner_scan(void *, TSLexer *, const bool *);
-unsigned tree_sitter_fluent_external_scanner_serialize(void *, char *);
-void tree_sitter_fluent_external_scanner_deserialize(void *, const char *, unsigned);
+void *tree_sitter_ftl_external_scanner_create(void);
+void tree_sitter_ftl_external_scanner_destroy(void *);
+bool tree_sitter_ftl_external_scanner_scan(void *, TSLexer *, const bool *);
+unsigned tree_sitter_ftl_external_scanner_serialize(void *, char *);
+void tree_sitter_ftl_external_scanner_deserialize(void *, const char *, unsigned);
 
 #ifdef TREE_SITTER_HIDE_SYMBOLS
 #define TS_PUBLIC
@@ -2429,7 +2429,7 @@ void tree_sitter_fluent_external_scanner_deserialize(void *, const char *, unsig
 #define TS_PUBLIC __attribute__((visibility("default")))
 #endif
 
-TS_PUBLIC const TSLanguage *tree_sitter_fluent(void) {
+TS_PUBLIC const TSLanguage *tree_sitter_ftl(void) {
   static const TSLanguage language = {
     .version = LANGUAGE_VERSION,
     .symbol_count = SYMBOL_COUNT,
@@ -2455,11 +2455,11 @@ TS_PUBLIC const TSLanguage *tree_sitter_fluent(void) {
     .external_scanner = {
       &ts_external_scanner_states[0][0],
       ts_external_scanner_symbol_map,
-      tree_sitter_fluent_external_scanner_create,
-      tree_sitter_fluent_external_scanner_destroy,
-      tree_sitter_fluent_external_scanner_scan,
-      tree_sitter_fluent_external_scanner_serialize,
-      tree_sitter_fluent_external_scanner_deserialize,
+      tree_sitter_ftl_external_scanner_create,
+      tree_sitter_ftl_external_scanner_destroy,
+      tree_sitter_ftl_external_scanner_scan,
+      tree_sitter_ftl_external_scanner_serialize,
+      tree_sitter_ftl_external_scanner_deserialize,
     },
     .primary_state_ids = ts_primary_state_ids,
   };
