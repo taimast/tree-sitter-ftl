@@ -1,5 +1,5 @@
 {
-  "name": "fluent",
+  "name": "ftl",
   "rules": {
     "source_file": {
       "type": "REPEAT",
