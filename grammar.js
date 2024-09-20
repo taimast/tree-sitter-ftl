@@ -1,6 +1,6 @@
 // grammar.js
 module.exports = grammar({
-  name: "fluent",
+  name: "ftl",
 
   extras: ($) => [/[ \t]/],
 
