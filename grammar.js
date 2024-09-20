@@ -1,36 +1,51 @@
+// grammar.js
 module.exports = grammar({
-  name: "ftl",
+  name: "fluent",
+
+  extras: ($) => [/[ \t]/],
 
   rules: {
-    // Корневое правило
-    document: ($) => repeat($.entry),
+    source_file: ($) => repeat($._entry),
 
-    entry: ($) => choice($.message, $.comment),
+    _entry: ($) => choice($.message, $.comment, $.blank_line),
 
-    // Определяем структуру сообщения
+    comment: ($) => token(seq("#", /.*/)),
+
+    blank_line: ($) => /\r?\n/,
+
     message: ($) =>
       seq(
-        $.identifier, // Идентификатор сообщения
-        "=", // Символ присваивания значения
-        $.message_value, // Значение сообщения
+        field("id", $.identifier),
+        "=",
+        field("value", $.message_value),
+        optional("\n"),
       ),
 
     identifier: ($) => /[a-zA-Z][a-zA-Z0-9_-]*/,
 
-    // Обновленное определение message_value
-    message_value: ($) => repeat1(choice($.text, $.variable)),
+    message_value: ($) => repeat1(choice($.text, $.placeable, $.line_break)),
 
-    // Определение текста и переменной
-    text: ($) => /[^{}\n]+/, // Обновлено, чтобы исключить переводы строк
+    text: ($) => token(prec(1, /[^\n{]+/)),
 
-    // Переменная с пробелами внутри фигурных скобок
-    variable: ($) =>
-      seq("{", optional(/\s*/), "$", $.identifier, optional(/\s*/), "}"),
+    placeable: ($) => seq("{", field("expression", $.expression), "}"),
 
-    // Правила для комментариев
-    comment: ($) => token(seq("#", /.*/)),
+    expression: ($) =>
+      choice($.variable_reference, $.number_literal, $.string_literal),
+
+    variable_reference: ($) => seq("$", $.identifier),
+
+    number_literal: ($) => /\d+(\.\d+)?/,
+
+    string_literal: ($) =>
+      seq(
+        '"',
+        repeat(choice(token.immediate(/[^"\\]+/), $.escape_sequence)),
+        '"',
+      ),
+
+    escape_sequence: ($) =>
+      token.immediate(seq("\\", choice(/["\\\/bfnrt]/, /u[0-9a-fA-F]{4}/))),
+
+    line_break: ($) => /\n/,
   },
-
-  // Указываем пробелы и переносы строк как допустимые символы
-  extras: ($) => [/\s/],
 });
