@@ -37,3 +37,6 @@ dist/
 *.wasm
 *.obj
 *.o
+
+grammar copy.js
+parse_output.txt
