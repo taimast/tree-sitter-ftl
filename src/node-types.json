@@ -1,48 +1,48 @@
 [
   {
-    "type": "attribute",
+    "type": "document",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "identifier",
+          "type": "comment",
           "named": true
         },
         {
-          "type": "value",
+          "type": "message",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "attribute_expression",
+    "type": "function_argument",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "placeable_reference_or_number",
           "named": true
         },
         {
-          "type": "message_identifier",
+          "type": "placeable_string",
           "named": true
         },
         {
-          "type": "term_identifier",
+          "type": "text",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "call_expression",
+    "type": "function_arguments",
     "named": true,
     "fields": {},
     "children": {
@@ -50,109 +50,7 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_expression",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "function_identifier",
-          "named": true
-        },
-        {
-          "type": "keyword_argument",
-          "named": true
-        },
-        {
-          "type": "message_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "select_expression",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        },
-        {
-          "type": "variable_expression",
-          "named": true
-        },
-        {
-          "type": "variant_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "default_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "facet_identifier",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "keyword_argument",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_expression",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "keyword_identifier",
-          "named": true
-        },
-        {
-          "type": "message_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "select_expression",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        },
-        {
-          "type": "variable_expression",
-          "named": true
-        },
-        {
-          "type": "variant_expression",
+          "type": "function_argument",
           "named": true
         }
       ]
@@ -167,19 +65,39 @@
       "required": true,
       "types": [
         {
-          "type": "attribute",
+          "type": "message_content",
           "named": true
         },
         {
           "type": "message_identifier",
           "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "message_content",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "placeable",
+          "named": true
         },
         {
-          "type": "value",
+          "type": "text",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "message_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "placeable",
@@ -190,177 +108,14 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_expression",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "message_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "select_expression",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        },
-        {
-          "type": "variable_expression",
-          "named": true
-        },
-        {
-          "type": "variant_expression",
+          "type": "placeable_content",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "select_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_expression",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "default_selector",
-          "named": true
-        },
-        {
-          "type": "message_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "select_expression",
-          "named": true
-        },
-        {
-          "type": "selector",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        },
-        {
-          "type": "variable_expression",
-          "named": true
-        },
-        {
-          "type": "variant_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "facet_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "term",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "translation_file",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "message",
-          "named": true
-        },
-        {
-          "type": "term",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "value",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "placeable",
-          "named": true
-        },
-        {
-          "type": "variant",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "variable_expression",
+    "type": "placeable_content",
     "named": true,
     "fields": {},
     "children": {
@@ -368,64 +123,38 @@
       "required": true,
       "types": [
         {
-          "type": "variable_identifier",
+          "type": "placeable_function",
+          "named": true
+        },
+        {
+          "type": "placeable_reference_or_number",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "variant",
+    "type": "placeable_function",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
-          "type": "default_selector",
-          "named": true
-        },
-        {
-          "type": "selector",
+          "type": "function_arguments",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "variant_expression",
+    "type": "placeable_string",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "facet_identifier",
-          "named": true
-        },
-        {
-          "type": "message_identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "term_identifier",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
-    "type": "$",
-    "named": false
-  },
-  {
-    "type": "(",
+    "type": "\"",
     "named": false
   },
   {
@@ -433,35 +162,7 @@
     "named": false
   },
   {
-    "type": "*",
-    "named": false
-  },
-  {
     "type": ",",
-    "named": false
-  },
-  {
-    "type": "->",
-    "named": false
-  },
-  {
-    "type": ".",
-    "named": false
-  },
-  {
-    "type": ":",
-    "named": false
-  },
-  {
-    "type": "=",
-    "named": false
-  },
-  {
-    "type": "[",
-    "named": false
-  },
-  {
-    "type": "]",
     "named": false
   },
   {
@@ -469,35 +170,11 @@
     "named": true
   },
   {
-    "type": "facet_identifier",
+    "type": "placeable_reference_or_number",
     "named": true
   },
   {
-    "type": "function_identifier",
-    "named": true
-  },
-  {
-    "type": "identifier",
-    "named": true
-  },
-  {
-    "type": "keyword_identifier",
-    "named": true
-  },
-  {
-    "type": "message_identifier",
-    "named": true
-  },
-  {
-    "type": "number",
-    "named": true
-  },
-  {
-    "type": "term_identifier",
-    "named": true
-  },
-  {
-    "type": "variable_identifier",
+    "type": "text",
     "named": true
   },
   {
